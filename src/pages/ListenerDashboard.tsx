@@ -1,4 +1,4 @@
-import { Sidebar } from "@/components/Sidebar";
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { StatCard } from "@/components/StatCard";
 import { FeaturedPlaylist } from "@/components/FeaturedPlaylist";
 import { ArtistCard } from "@/components/ArtistCard";
@@ -6,7 +6,6 @@ import { TrackItem } from "@/components/TrackItem";
 import { Clock, Music, Heart, Award, MessageSquare, Vote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 
 const ListenerDashboard = () => {
   const stats = [
@@ -34,103 +33,92 @@ const ListenerDashboard = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-background">
-      <Sidebar />
-      
-      <main className="flex-1 overflow-auto">
-        <div className="p-8">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">Listener Dashboard</h1>
-            <p className="text-muted-foreground">Your personalized music experience</p>
-          </div>
+    <DashboardLayout title="Listener Dashboard">
+      <div className="space-y-8">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {stats.map((stat) => (
+            <StatCard key={stat.label} {...stat} />
+          ))}
+        </div>
 
-          <div className="space-y-8">
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {stats.map((stat) => (
-                <StatCard key={stat.label} {...stat} />
+        {/* Featured Recommendations */}
+        <div>
+          <h2 className="text-2xl font-bold mb-4">Recommended for You</h2>
+          <FeaturedPlaylist />
+        </div>
+
+        {/* Engagement Badges */}
+        <Card className="card-shadow">
+          <CardHeader>
+            <CardTitle>Your Badges</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex gap-4">
+              {badges.map((badge, index) => (
+                <div key={index} className="flex flex-col items-center gap-2 p-4 rounded-lg bg-muted/50">
+                  <badge.icon className={`w-8 h-8 ${badge.color}`} />
+                  <span className="text-sm font-medium">{badge.name}</span>
+                </div>
               ))}
             </div>
+          </CardContent>
+        </Card>
 
-            {/* Featured Recommendations */}
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Recommended for You</h2>
-              <FeaturedPlaylist />
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Favorite Artists */}
+          <Card className="card-shadow">
+            <CardHeader>
+              <CardTitle>Favorite Artists</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex gap-6">
+                {artists.map((artist) => (
+                  <ArtistCard key={artist.name} {...artist} />
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
-            {/* Engagement Badges */}
-            <Card className="card-shadow">
-              <CardHeader>
-                <CardTitle>Your Badges</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-4">
-                  {badges.map((badge, index) => (
-                    <div key={index} className="flex flex-col items-center gap-2 p-4 rounded-lg bg-muted/50">
-                      <badge.icon className={`w-8 h-8 ${badge.color}`} />
-                      <span className="text-sm font-medium">{badge.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Favorite Artists */}
-              <Card className="card-shadow">
-                <CardHeader>
-                  <CardTitle>Favorite Artists</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex gap-6">
-                    {artists.map((artist) => (
-                      <ArtistCard key={artist.name} {...artist} />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Recent Activity */}
-              <Card className="card-shadow">
-                <CardHeader>
-                  <CardTitle>Recently Played</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    {recentTracks.map((track, index) => (
-                      <TrackItem key={index} {...track} />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Interactive Modules */}
-            <Card className="card-shadow">
-              <CardHeader>
-                <CardTitle>Get Involved</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-3">
-                  <Button className="flex items-center gap-2">
-                    <Vote className="w-4 h-4" />
-                    Vote for Tracks
-                  </Button>
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <MessageSquare className="w-4 h-4" />
-                    Leave Comments
-                  </Button>
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <Award className="w-4 h-4" />
-                    Join Fan Events
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          {/* Recent Activity */}
+          <Card className="card-shadow">
+            <CardHeader>
+              <CardTitle>Recently Played</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {recentTracks.map((track, index) => (
+                  <TrackItem key={index} {...track} />
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </main>
-    </div>
+
+        {/* Interactive Modules */}
+        <Card className="card-shadow">
+          <CardHeader>
+            <CardTitle>Get Involved</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-3">
+              <Button className="flex items-center gap-2">
+                <Vote className="w-4 h-4" />
+                Vote for Tracks
+              </Button>
+              <Button variant="outline" className="flex items-center gap-2">
+                <MessageSquare className="w-4 h-4" />
+                Leave Comments
+              </Button>
+              <Button variant="outline" className="flex items-center gap-2">
+                <Award className="w-4 h-4" />
+                Join Fan Events
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </DashboardLayout>
   );
 };
 
