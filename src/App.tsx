@@ -8,6 +8,7 @@ import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
 import EntityDetail from "./pages/EntityDetail";
 import ArtistDashboard from "./pages/ArtistDashboard";
+import ManagerDashboard from "./pages/ManagerDashboard";
 import LabelDashboard from "./pages/LabelDashboard";
 import CuratorDashboard from "./pages/CuratorDashboard";
 import JournalistDashboard from "./pages/JournalistDashboard";
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/entity/:type/:id" element={<EntityDetail />} />
           <Route path="/artist" element={<ArtistDashboard />} />
+          <Route path="/manager" element={<ManagerDashboard />} />
           <Route path="/label" element={<LabelDashboard />} />
           <Route path="/curator" element={<CuratorDashboard />} />
           <Route path="/journalist" element={<JournalistDashboard />} />

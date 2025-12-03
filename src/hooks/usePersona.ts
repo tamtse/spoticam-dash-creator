@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export type PersonaType = 'artist' | 'label' | 'curator' | 'journalist' | 'listener' | null;
+export type PersonaType = 'artist' | 'manager' | 'label' | 'curator' | 'journalist' | 'listener' | null;
 
 interface PersonaInfo {
   id: PersonaType;
@@ -19,9 +19,16 @@ export const PERSONAS: PersonaInfo[] = [
     dashboardPath: '/artist',
   },
   {
+    id: 'manager',
+    label: 'Manager',
+    description: 'Supervisez plusieurs artistes, suivez les performances du portfolio et identifiez les tendances.',
+    icon: '📊',
+    dashboardPath: '/manager',
+  },
+  {
     id: 'label',
-    label: 'Label / Manager',
-    description: 'Supervisez votre catalogue, gérez vos artistes et analysez les tendances.',
+    label: 'Label / A&R',
+    description: 'Découvrez de nouveaux talents, gérez votre roster et analysez les tendances du marché.',
     icon: '🏢',
     dashboardPath: '/label',
   },
