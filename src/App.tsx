@@ -14,6 +14,7 @@ import CuratorDashboard from "./pages/CuratorDashboard";
 import JournalistDashboard from "./pages/JournalistDashboard";
 import ListenerDashboard from "./pages/ListenerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import WrappedCameroun2025 from "./pages/WrappedCameroun2025";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/journalist" element={<JournalistDashboard />} />
           <Route path="/listener" element={<ListenerDashboard />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/wrapped-cameroun-2025" element={<WrappedCameroun2025 />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
