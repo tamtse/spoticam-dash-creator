@@ -6,7 +6,11 @@ import { GenreDistributionSection } from '@/components/wrapped/GenreDistribution
 import { NewTalentsSection } from '@/components/wrapped/NewTalentsSection';
 import { GlobalStatsSection } from '@/components/wrapped/GlobalStatsSection';
 import { TrendsSection } from '@/components/wrapped/TrendsSection';
-import { Music, TrendingUp, Users, Sparkles, BarChart3 } from 'lucide-react';
+import { TopTracksSection } from '@/components/wrapped/TopTracksSection';
+import { ArtistCategoriesSection } from '@/components/wrapped/ArtistCategoriesSection';
+import { ArtistHeatmapSection } from '@/components/wrapped/ArtistHeatmapSection';
+import { SpoticamStatsSection } from '@/components/wrapped/SpoticamStatsSection';
+import { Music, TrendingUp, Users, Sparkles, BarChart3, Disc, Grid3X3 } from 'lucide-react';
 
 const WrappedCameroun2025 = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -42,7 +46,7 @@ const WrappedCameroun2025 = () => {
 
       {/* Navigation Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 h-auto gap-2 bg-transparent p-0">
+        <TabsList className="grid w-full grid-cols-3 md:grid-cols-7 h-auto gap-2 bg-transparent p-0">
           <TabsTrigger 
             value="overview" 
             className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center gap-2 py-3"
@@ -56,6 +60,13 @@ const WrappedCameroun2025 = () => {
           >
             <Users className="w-4 h-4" />
             <span className="hidden sm:inline">Top Artistes</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="tracks" 
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center gap-2 py-3"
+          >
+            <Disc className="w-4 h-4" />
+            <span className="hidden sm:inline">Top Tracks</span>
           </TabsTrigger>
           <TabsTrigger 
             value="genres" 
@@ -72,6 +83,13 @@ const WrappedCameroun2025 = () => {
             <span className="hidden sm:inline">Nouveaux Talents</span>
           </TabsTrigger>
           <TabsTrigger 
+            value="heatmap" 
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center gap-2 py-3"
+          >
+            <Grid3X3 className="w-4 h-4" />
+            <span className="hidden sm:inline">Heatmap</span>
+          </TabsTrigger>
+          <TabsTrigger 
             value="trends" 
             className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center gap-2 py-3"
           >
@@ -82,15 +100,22 @@ const WrappedCameroun2025 = () => {
 
         <TabsContent value="overview" className="space-y-8">
           <GlobalStatsSection />
+          <ArtistCategoriesSection />
           <div className="grid lg:grid-cols-2 gap-8">
             <TopArtistsSection limit={5} />
             <GenreDistributionSection />
           </div>
-          <NewTalentsSection limit={4} />
+          <TopTracksSection limit={5} />
+          <SpoticamStatsSection />
         </TabsContent>
 
-        <TabsContent value="artists">
+        <TabsContent value="artists" className="space-y-6">
+          <ArtistCategoriesSection />
           <TopArtistsSection />
+        </TabsContent>
+
+        <TabsContent value="tracks">
+          <TopTracksSection />
         </TabsContent>
 
         <TabsContent value="genres">
@@ -99,6 +124,11 @@ const WrappedCameroun2025 = () => {
 
         <TabsContent value="talents">
           <NewTalentsSection />
+        </TabsContent>
+
+        <TabsContent value="heatmap" className="space-y-6">
+          <ArtistHeatmapSection />
+          <TrendsSection />
         </TabsContent>
 
         <TabsContent value="trends">
