@@ -11,7 +11,8 @@ import {
   Lock,
   Crown,
   Settings,
-  LogOut
+  LogOut,
+  Disc3
 } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { usePersona } from '@/hooks/usePersona';
@@ -34,6 +35,7 @@ const baseNavItems = [
   { icon: Compass, label: 'Découverte', path: '/dashboard/discovery', pro: false },
   { icon: Music, label: 'Ma Bibliothèque', path: '/dashboard/library', pro: false },
   { icon: TrendingUp, label: 'Tendances', path: '/dashboard/trending', pro: false },
+  { icon: Disc3, label: 'Studio', path: '/studio', pro: false },
 ];
 
 const proNavItems = [
