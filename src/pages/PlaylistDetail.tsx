@@ -12,12 +12,17 @@ import {
   Lock,
   Camera,
   ExternalLink,
-  Share2
+  Share2,
+  Users,
+  TrendingUp,
+  BarChart3
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
+import { StatCard } from '@/components/StatCard';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -100,150 +105,163 @@ const mockTracks = [
   },
 ];
 
+const playlistStats = [
+  { icon: Users, label: "Followers", value: "234", trend: "+12", trendUp: true },
+  { icon: Play, label: "Lectures", value: "1.2K", trend: "+8%", trendUp: true },
+  { icon: TrendingUp, label: "Engagement", value: "8.7/10", trend: "+0.3", trendUp: true },
+  { icon: BarChart3, label: "Saves", value: "89", trend: "+15", trendUp: true },
+];
+
 export default function PlaylistDetail() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddTracksModalOpen, setIsAddTracksModalOpen] = useState(false);
   const [isReorderMode, setIsReorderMode] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header with Back Button */}
-      <div className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <NavLink 
-            to="/studio" 
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Retour aux playlists
-          </NavLink>
-        </div>
-      </div>
+    <DashboardLayout title="Studio">
+      <div className="space-y-8">
+        {/* Back Button */}
+        <NavLink 
+          to="/studio" 
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Retour aux playlists
+        </NavLink>
 
-      {/* Playlist Hero */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex flex-col md:flex-row gap-8">
-          {/* Cover Image */}
-          <div className="relative group flex-shrink-0">
-            <div className="w-64 h-64 rounded-2xl overflow-hidden shadow-xl bg-muted">
-              <img
-                src={mockPlaylist.imageUrl}
-                alt={mockPlaylist.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <button className="absolute inset-0 bg-secondary/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl flex flex-col items-center justify-center gap-2 text-primary-foreground">
-              <Camera className="w-8 h-8" />
-              <span className="text-sm font-medium">Changer la cover</span>
-            </button>
-          </div>
-
-          {/* Info */}
-          <div className="flex-1 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <Badge 
-                  variant="outline" 
-                  className={cn(
-                    "flex items-center gap-1.5 border",
-                    mockPlaylist.isPublic 
-                      ? "border-primary/30 text-primary bg-primary/5" 
-                      : "border-muted-foreground/30 text-muted-foreground bg-muted/50"
-                  )}
-                >
-                  {mockPlaylist.isPublic ? (
-                    <>
-                      <Globe className="w-3 h-3" />
-                      Public
-                    </>
-                  ) : (
-                    <>
-                      <Lock className="w-3 h-3" />
-                      Privée
-                    </>
-                  )}
-                </Badge>
-                <span className="text-sm text-muted-foreground">par {mockPlaylist.owner}</span>
+        {/* Playlist Hero Card */}
+        <Card className="card-shadow">
+          <CardContent className="pt-6">
+            <div className="flex flex-col md:flex-row gap-6">
+              {/* Cover Image */}
+              <div className="relative group flex-shrink-0">
+                <div className="w-48 h-48 rounded-xl overflow-hidden bg-muted">
+                  <img
+                    src={mockPlaylist.imageUrl}
+                    alt={mockPlaylist.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <button className="absolute inset-0 bg-secondary/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex flex-col items-center justify-center gap-2 text-primary-foreground">
+                  <Camera className="w-6 h-6" />
+                  <span className="text-xs font-medium">Changer la cover</span>
+                </button>
               </div>
 
-              <h1 className="text-4xl font-bold text-foreground mb-3">
-                {mockPlaylist.name}
-              </h1>
+              {/* Info */}
+              <div className="flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <Badge 
+                      variant="outline" 
+                      className={cn(
+                        "flex items-center gap-1.5 border",
+                        mockPlaylist.isPublic 
+                          ? "border-primary/30 text-primary bg-primary/5" 
+                          : "border-muted-foreground/30 text-muted-foreground bg-muted/50"
+                      )}
+                    >
+                      {mockPlaylist.isPublic ? (
+                        <>
+                          <Globe className="w-3 h-3" />
+                          Public
+                        </>
+                      ) : (
+                        <>
+                          <Lock className="w-3 h-3" />
+                          Privée
+                        </>
+                      )}
+                    </Badge>
+                    <span className="text-sm text-muted-foreground">par {mockPlaylist.owner}</span>
+                  </div>
 
-              <p className="text-muted-foreground max-w-2xl mb-4">
-                {mockPlaylist.description}
-              </p>
+                  <h1 className="text-2xl font-bold text-foreground mb-2">
+                    {mockPlaylist.name}
+                  </h1>
 
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                <span>{mockPlaylist.trackCount} tracks</span>
-                <span>•</span>
-                <span>{mockPlaylist.duration}</span>
-                <span>•</span>
-                <span>{mockPlaylist.followers} abonnés</span>
+                  <p className="text-sm text-muted-foreground max-w-xl mb-3">
+                    {mockPlaylist.description}
+                  </p>
+
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <span>{mockPlaylist.trackCount} tracks</span>
+                    <span>•</span>
+                    <span>{mockPlaylist.duration}</span>
+                    <span>•</span>
+                    <span>{mockPlaylist.followers} abonnés</span>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex flex-wrap items-center gap-3 mt-4">
+                  <Button className="gap-2">
+                    <Play className="w-4 h-4 fill-current" />
+                    Écouter
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="gap-2"
+                    onClick={() => setIsAddTracksModalOpen(true)}
+                  >
+                    <Plus className="w-4 h-4" />
+                    Ajouter des tracks
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="gap-2"
+                    onClick={() => setIsEditModalOpen(true)}
+                  >
+                    <Edit2 className="w-4 h-4" />
+                    Modifier
+                  </Button>
+                  <Button variant="ghost" size="icon">
+                    <Share2 className="w-4 h-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon">
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                </div>
               </div>
             </div>
+          </CardContent>
+        </Card>
 
-            {/* Actions */}
-            <div className="flex flex-wrap items-center gap-3 mt-6">
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
-                <Play className="w-4 h-4 fill-current" />
-                Écouter
-              </Button>
-              <Button 
-                variant="outline" 
-                className="gap-2 border-border"
-                onClick={() => setIsAddTracksModalOpen(true)}
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {playlistStats.map((stat) => (
+            <StatCard key={stat.label} {...stat} />
+          ))}
+        </div>
+
+        {/* Tracks Section */}
+        <Card className="card-shadow">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle>Tracks</CardTitle>
+              <Button
+                variant={isReorderMode ? "secondary" : "outline"}
+                size="sm"
+                onClick={() => setIsReorderMode(!isReorderMode)}
+                className="gap-2"
               >
-                <Plus className="w-4 h-4" />
-                Ajouter des tracks
-              </Button>
-              <Button 
-                variant="outline" 
-                className="gap-2 border-border"
-                onClick={() => setIsEditModalOpen(true)}
-              >
-                <Edit2 className="w-4 h-4" />
-                Modifier
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Share2 className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <ExternalLink className="w-4 h-4" />
+                <GripVertical className="w-4 h-4" />
+                {isReorderMode ? 'Terminé' : 'Réorganiser'}
               </Button>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Tracks Section */}
-      <div className="max-w-7xl mx-auto px-6 pb-12">
-        <Card className="bg-card border-border overflow-hidden">
-          {/* Tracks Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-muted/30">
-            <h2 className="text-lg font-semibold text-foreground">Tracks</h2>
-            <Button
-              variant={isReorderMode ? "secondary" : "ghost"}
-              size="sm"
-              onClick={() => setIsReorderMode(!isReorderMode)}
-              className="gap-2"
-            >
-              <GripVertical className="w-4 h-4" />
-              {isReorderMode ? 'Terminé' : 'Réorganiser'}
-            </Button>
-          </div>
-
-          {/* Track List */}
-          <div className="divide-y divide-border">
-            {mockTracks.map((track, index) => (
-              <TrackRow 
-                key={track.id} 
-                track={track} 
-                index={index + 1} 
-                isReorderMode={isReorderMode}
-              />
-            ))}
-          </div>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="divide-y divide-border">
+              {mockTracks.map((track, index) => (
+                <TrackRow 
+                  key={track.id} 
+                  track={track} 
+                  index={index + 1} 
+                  isReorderMode={isReorderMode}
+                />
+              ))}
+            </div>
+          </CardContent>
         </Card>
       </div>
 
@@ -258,7 +276,7 @@ export default function PlaylistDetail() {
         onOpenChange={setIsAddTracksModalOpen}
         playlistName={mockPlaylist.name}
       />
-    </div>
+    </DashboardLayout>
   );
 }
 

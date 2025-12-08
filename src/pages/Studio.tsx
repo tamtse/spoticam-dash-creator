@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Search, Music2, Lock, Globe, MoreHorizontal, Play, Shuffle } from 'lucide-react';
+import { Plus, Search, Music2, Lock, Globe, MoreHorizontal, Play, Shuffle, Users, ListMusic, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
+import { StatCard } from '@/components/StatCard';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +26,8 @@ const mockPlaylists = [
     trackCount: 25,
     isPublic: true,
     duration: '1h 32min',
+    followers: '12.5K',
+    engagement: 8.7,
   },
   {
     id: '2',
@@ -33,6 +37,8 @@ const mockPlaylists = [
     trackCount: 42,
     isPublic: true,
     duration: '2h 45min',
+    followers: '8.3K',
+    engagement: 7.9,
   },
   {
     id: '3',
@@ -42,6 +48,8 @@ const mockPlaylists = [
     trackCount: 12,
     isPublic: false,
     duration: '45min',
+    followers: '-',
+    engagement: 0,
   },
   {
     id: '4',
@@ -51,6 +59,8 @@ const mockPlaylists = [
     trackCount: 18,
     isPublic: true,
     duration: '1h 05min',
+    followers: '5.2K',
+    engagement: 9.1,
   },
   {
     id: '5',
@@ -60,7 +70,16 @@ const mockPlaylists = [
     trackCount: 8,
     isPublic: false,
     duration: '28min',
+    followers: '-',
+    engagement: 0,
   },
+];
+
+const stats = [
+  { icon: ListMusic, label: "Total Playlists", value: "5", trend: "+1", trendUp: true },
+  { icon: Users, label: "Total Followers", value: "26K", trend: "+12%", trendUp: true },
+  { icon: Music2, label: "Total Tracks", value: "105", trend: "+8", trendUp: true },
+  { icon: TrendingUp, label: "Avg Engagement", value: "8.4", trend: "+0.3", trendUp: true },
 ];
 
 export default function Studio() {
@@ -75,62 +94,65 @@ export default function Studio() {
   );
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Mes Playlists</h1>
-              <p className="text-muted-foreground mt-1">
-                Gérez et organisez vos playlists Spotify
-              </p>
-            </div>
-            <Button 
-              onClick={() => setIsCreateModalOpen(true)}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              Nouvelle Playlist
-            </Button>
-          </div>
-
-          {/* Search */}
-          <div className="mt-6 relative max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder="Rechercher une playlist..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-background border-border"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Playlists Grid */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid gap-4">
-          {filteredPlaylists.map((playlist) => (
-            <PlaylistCard 
-              key={playlist.id} 
-              playlist={playlist} 
-              onClick={() => navigate(`/studio/playlists/${playlist.id}`)}
-            />
+    <DashboardLayout title="Studio">
+      <div className="space-y-8">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {stats.map((stat) => (
+            <StatCard key={stat.label} {...stat} />
           ))}
         </div>
 
-        {filteredPlaylists.length === 0 && (
-          <div className="text-center py-16">
-            <Music2 className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground">
-              Aucune playlist trouvée
-            </h3>
-            <p className="text-muted-foreground mt-2">
-              Essayez une autre recherche ou créez une nouvelle playlist
-            </p>
-          </div>
-        )}
+        {/* Playlists Section */}
+        <Card className="card-shadow">
+          <CardHeader>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <CardTitle>Mes Playlists</CardTitle>
+              <div className="flex items-center gap-3">
+                {/* Search */}
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Rechercher..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 w-64 bg-background border-border"
+                  />
+                </div>
+                <Button 
+                  onClick={() => setIsCreateModalOpen(true)}
+                  size="sm"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Nouvelle Playlist
+                </Button>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {filteredPlaylists.map((playlist) => (
+                <PlaylistCard 
+                  key={playlist.id} 
+                  playlist={playlist} 
+                  onClick={() => navigate(`/studio/playlists/${playlist.id}`)}
+                />
+              ))}
+
+              {filteredPlaylists.length === 0 && (
+                <div className="text-center py-12">
+                  <Music2 className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-foreground">
+                    Aucune playlist trouvée
+                  </h3>
+                  <p className="text-muted-foreground mt-1">
+                    Essayez une autre recherche ou créez une nouvelle playlist
+                  </p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Create Playlist Modal */}
@@ -138,7 +160,7 @@ export default function Studio() {
         open={isCreateModalOpen} 
         onOpenChange={setIsCreateModalOpen} 
       />
-    </div>
+    </DashboardLayout>
   );
 }
 
@@ -151,44 +173,61 @@ interface PlaylistCardProps {
     trackCount: number;
     isPublic: boolean;
     duration: string;
+    followers: string;
+    engagement: number;
   };
   onClick: () => void;
 }
 
 function PlaylistCard({ playlist, onClick }: PlaylistCardProps) {
   return (
-    <Card 
+    <div 
       onClick={onClick}
-      className="group relative bg-card hover:bg-card/80 border-border transition-all duration-200 hover:shadow-lg cursor-pointer overflow-hidden"
+      className="group p-4 rounded-lg bg-muted/50 hover:bg-muted transition-smooth cursor-pointer"
     >
-      <div className="flex items-center gap-4 p-4">
+      <div className="flex items-center gap-4">
         {/* Cover Image */}
-        <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-muted">
+        <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-muted">
           <img
             src={playlist.imageUrl}
             alt={playlist.name}
             className="w-full h-full object-cover"
           />
           {/* Play overlay on hover */}
-          <div className="absolute inset-0 bg-secondary/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-            <button className="w-8 h-8 rounded-full bg-primary flex items-center justify-center hover:scale-110 transition-transform">
-              <Play className="w-4 h-4 text-primary-foreground fill-current" />
+          <div className="absolute inset-0 bg-secondary/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
+            <button 
+              onClick={(e) => { e.stopPropagation(); }}
+              className="w-7 h-7 rounded-full bg-primary flex items-center justify-center hover:scale-110 transition-transform"
+            >
+              <Play className="w-3.5 h-3.5 text-primary-foreground fill-current" />
             </button>
-            <button className="w-8 h-8 rounded-full bg-background/20 flex items-center justify-center hover:bg-background/40 transition-colors">
-              <Shuffle className="w-4 h-4 text-primary-foreground" />
+            <button 
+              onClick={(e) => { e.stopPropagation(); }}
+              className="w-7 h-7 rounded-full bg-background/20 flex items-center justify-center hover:bg-background/40 transition-colors"
+            >
+              <Shuffle className="w-3.5 h-3.5 text-primary-foreground" />
             </button>
           </div>
         </div>
 
         {/* Info */}
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-foreground truncate group-hover:text-primary transition-colors">
-            {playlist.name}
-          </h3>
-          <p className="text-sm text-muted-foreground truncate mt-0.5">
-            {playlist.description}
-          </p>
-          <div className="flex items-center gap-3 mt-2">
+          <div className="flex justify-between items-start mb-1">
+            <div>
+              <h4 className="font-semibold text-foreground truncate group-hover:text-primary transition-colors">
+                {playlist.name}
+              </h4>
+              <p className="text-sm text-muted-foreground truncate">
+                {playlist.description}
+              </p>
+            </div>
+            {playlist.isPublic && playlist.engagement > 0 && (
+              <Badge variant="secondary">
+                {playlist.engagement}/10 engagement
+              </Badge>
+            )}
+          </div>
+          <div className="flex items-center gap-4 mt-2">
             <span className="text-xs text-muted-foreground">
               {playlist.trackCount} tracks
             </span>
@@ -196,6 +235,14 @@ function PlaylistCard({ playlist, onClick }: PlaylistCardProps) {
             <span className="text-xs text-muted-foreground">
               {playlist.duration}
             </span>
+            {playlist.isPublic && (
+              <>
+                <span className="text-xs text-muted-foreground">•</span>
+                <span className="text-xs text-muted-foreground">
+                  {playlist.followers} followers
+                </span>
+              </>
+            )}
           </div>
         </div>
 
@@ -203,7 +250,7 @@ function PlaylistCard({ playlist, onClick }: PlaylistCardProps) {
         <Badge 
           variant="outline" 
           className={cn(
-            "flex items-center gap-1.5 border",
+            "flex items-center gap-1.5 border flex-shrink-0",
             playlist.isPublic 
               ? "border-primary/30 text-primary bg-primary/5" 
               : "border-muted-foreground/30 text-muted-foreground bg-muted/50"
@@ -222,25 +269,42 @@ function PlaylistCard({ playlist, onClick }: PlaylistCardProps) {
           )}
         </Badge>
 
-        {/* Actions Menu */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-              <MoreHorizontal className="w-4 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-popover border-border">
-            <DropdownMenuItem>Modifier</DropdownMenuItem>
-            <DropdownMenuItem>Dupliquer</DropdownMenuItem>
-            <DropdownMenuItem>Partager</DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive">Supprimer</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {/* Actions */}
+        <div className="flex gap-2 flex-shrink-0">
+          <Button 
+            size="sm" 
+            variant="outline"
+            onClick={(e) => { e.stopPropagation(); }}
+          >
+            Manage
+          </Button>
+          <Button 
+            size="sm" 
+            variant="outline"
+            onClick={(e) => { e.stopPropagation(); }}
+          >
+            Stats
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <MoreHorizontal className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-popover border-border">
+              <DropdownMenuItem>Modifier</DropdownMenuItem>
+              <DropdownMenuItem>Dupliquer</DropdownMenuItem>
+              <DropdownMenuItem>Partager</DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive">Supprimer</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
-    </Card>
+    </div>
   );
 }
