@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Plus, Search, Music2, Lock, Globe, MoreHorizontal, Play, Shuffle, Users, ListMusic, TrendingUp } from 'lucide-react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { Plus, Search, Music2, Lock, Globe, MoreHorizontal, Play, Shuffle, Users, ListMusic, TrendingUp, Inbox } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -96,6 +96,16 @@ export default function Studio() {
   return (
     <DashboardLayout title="Studio">
       <div className="space-y-8">
+        {/* Quick Actions */}
+        <div className="flex items-center gap-3">
+          <Button asChild variant="outline" className="gap-2">
+            <NavLink to="/studio/pitches">
+              <Inbox className="w-4 h-4" />
+              Inbox Pitches
+            </NavLink>
+          </Button>
+        </div>
+
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((stat) => (
