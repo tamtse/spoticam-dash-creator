@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { Plus, Search, Music2, Lock, Globe, MoreHorizontal, Play, Shuffle, Users, ListMusic, TrendingUp, Inbox } from 'lucide-react';
+import { Plus, Search, Music2, Lock, Globe, MoreHorizontal, Play, Shuffle, Users, ListMusic, TrendingUp, Inbox, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -102,6 +102,12 @@ export default function Studio() {
             <NavLink to="/studio/pitches">
               <Inbox className="w-4 h-4" />
               Inbox Pitches
+            </NavLink>
+          </Button>
+          <Button asChild variant="outline" className="gap-2">
+            <NavLink to="/studio/analytics">
+              <BarChart3 className="w-4 h-4" />
+              Analytics
             </NavLink>
           </Button>
         </div>

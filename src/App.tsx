@@ -18,6 +18,7 @@ import WrappedCameroun2025 from "./pages/WrappedCameroun2025";
 import Studio from "./pages/Studio";
 import PlaylistDetail from "./pages/PlaylistDetail";
 import StudioPitches from "./pages/StudioPitches";
+import StudioAnalytics from "./pages/StudioAnalytics";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/studio" element={<Studio />} />
           <Route path="/studio/playlists/:id" element={<PlaylistDetail />} />
           <Route path="/studio/pitches" element={<StudioPitches />} />
+          <Route path="/studio/analytics" element={<StudioAnalytics />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
