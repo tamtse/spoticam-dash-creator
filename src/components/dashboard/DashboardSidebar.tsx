@@ -12,7 +12,9 @@ import {
   Crown,
   Settings,
   LogOut,
-  Disc3
+  Disc3,
+  Inbox,
+  PieChart
 } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { usePersona } from '@/hooks/usePersona';
@@ -36,6 +38,8 @@ const baseNavItems = [
   { icon: Music, label: 'Ma Bibliothèque', path: '/dashboard/library', pro: false },
   { icon: TrendingUp, label: 'Tendances', path: '/dashboard/trending', pro: false },
   { icon: Disc3, label: 'Studio', path: '/studio', pro: false },
+  { icon: Inbox, label: 'Inbox Pitches', path: '/studio/pitches', pro: false },
+  { icon: PieChart, label: 'Analytics Studio', path: '/studio/analytics', pro: false },
 ];
 
 const proNavItems = [
