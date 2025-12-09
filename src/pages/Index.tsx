@@ -1,12 +1,11 @@
-import { Sidebar } from "@/components/Sidebar";
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { StatCard } from "@/components/StatCard";
 import { FeaturedPlaylist } from "@/components/FeaturedPlaylist";
 import { ArtistCard } from "@/components/ArtistCard";
 import { TrackItem } from "@/components/TrackItem";
 import { NowPlaying } from "@/components/NowPlaying";
-import { Clock, Music, TrendingUp, Headphones, Search, Settings, Bell, User } from "lucide-react";
+import { Clock, Music, TrendingUp, Headphones } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 const Index = () => {
   const stats = [
@@ -31,93 +30,60 @@ const Index = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-background">
-      <Sidebar />
-      
-      <main className="flex-1 overflow-auto">
-        {/* Header */}
-        <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border">
-          <div className="flex items-center justify-between px-8 py-4">
-            <div className="flex items-center gap-4 flex-1 max-w-xl">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input 
-                  placeholder="Search for songs, artists, albums..." 
-                  className="pl-10 bg-card"
-                />
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon">
-                <Bell className="w-5 h-5" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Settings className="w-5 h-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <User className="w-5 h-5" />
-              </Button>
+    <DashboardLayout title="Vue d'ensemble">
+      <div className="flex gap-8">
+        {/* Main Content */}
+        <div className="flex-1 space-y-8">
+          {/* Stats Grid */}
+          <div>
+            <h2 className="text-2xl font-bold mb-6">Your Statistics</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {stats.map((stat) => (
+                <StatCard key={stat.label} {...stat} />
+              ))}
             </div>
           </div>
-        </header>
 
-        <div className="p-8">
-          <div className="flex gap-8">
-            {/* Main Content */}
-            <div className="flex-1 space-y-8">
-              {/* Stats Grid */}
-              <div>
-                <h2 className="text-2xl font-bold mb-6">Your Statistics</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {stats.map((stat) => (
-                    <StatCard key={stat.label} {...stat} />
-                  ))}
-                </div>
-              </div>
+          {/* Featured Playlist */}
+          <div>
+            <FeaturedPlaylist />
+          </div>
 
-              {/* Featured Playlist */}
-              <div>
-                <FeaturedPlaylist />
-              </div>
-
-              {/* Popular Artists */}
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold">Popular artists</h2>
-                  <Button variant="ghost" className="text-primary">See all</Button>
-                </div>
-                <div className="flex gap-6 overflow-x-auto pb-4">
-                  {artists.map((artist) => (
-                    <ArtistCard key={artist.name} {...artist} />
-                  ))}
-                </div>
-              </div>
-
-              {/* Recently Played */}
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold">Recently played</h2>
-                  <Button variant="ghost" className="text-primary">See all</Button>
-                </div>
-                <div className="space-y-2">
-                  {recentTracks.map((track, index) => (
-                    <TrackItem key={index} {...track} />
-                  ))}
-                </div>
-              </div>
+          {/* Popular Artists */}
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold">Popular artists</h2>
+              <Button variant="ghost" className="text-primary">See all</Button>
             </div>
+            <div className="flex gap-6 overflow-x-auto pb-4">
+              {artists.map((artist) => (
+                <ArtistCard key={artist.name} {...artist} />
+              ))}
+            </div>
+          </div>
 
-            {/* Now Playing Sidebar */}
-            <div className="w-80 flex-shrink-0">
-              <div className="sticky top-24">
-                <NowPlaying />
-              </div>
+          {/* Recently Played */}
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold">Recently played</h2>
+              <Button variant="ghost" className="text-primary">See all</Button>
+            </div>
+            <div className="space-y-2">
+              {recentTracks.map((track, index) => (
+                <TrackItem key={index} {...track} />
+              ))}
             </div>
           </div>
         </div>
-      </main>
-    </div>
+
+        {/* Now Playing Sidebar */}
+        <div className="w-80 flex-shrink-0 hidden xl:block">
+          <div className="sticky top-24">
+            <NowPlaying />
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
   );
 };
 
