@@ -30,9 +30,9 @@ const portfolioKPIs = [
     icon: Users 
   },
   { 
-    label: 'Streams Totaux', 
-    value: '2.4M', 
-    trend: '+18%', 
+    label: 'Popularité Moyenne', 
+    value: '82/100', 
+    trend: '+8%', 
     trendUp: true,
     icon: Activity 
   },
@@ -57,7 +57,7 @@ const managedArtists = [
     id: 1,
     name: 'Travis Scott', 
     genre: 'Hip-Hop',
-    streams: '1.2M', 
+    popularity: 94, 
     momentum: 9.2, 
     placements: 45,
     trend: 'up',
@@ -68,7 +68,7 @@ const managedArtists = [
     id: 2,
     name: 'Doja Cat', 
     genre: 'Pop/R&B',
-    streams: '890K', 
+    popularity: 89, 
     momentum: 8.7, 
     placements: 38,
     trend: 'up',
@@ -79,7 +79,7 @@ const managedArtists = [
     id: 3,
     name: 'The Creator', 
     genre: 'Electronic',
-    streams: '245K', 
+    popularity: 72, 
     momentum: 7.4, 
     placements: 12,
     trend: 'down',
@@ -90,7 +90,7 @@ const managedArtists = [
     id: 4,
     name: 'Rising Star', 
     genre: 'Indie',
-    streams: '65K', 
+    popularity: 58, 
     momentum: 6.8, 
     placements: 5,
     trend: 'up',
@@ -239,7 +239,7 @@ const ManagerDashboard = () => {
                         <Badge variant="outline" className="text-xs">{artist.genre}</Badge>
                       </div>
                       <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
-                        <span>{artist.streams} streams</span>
+                        <span>Pop: {artist.popularity}</span>
                         <span>•</span>
                         <span>{artist.placements} placements</span>
                       </div>
@@ -408,7 +408,7 @@ const ManagerDashboard = () => {
                   <tr className="border-b border-border">
                     <th className="text-left py-3 px-4 font-medium text-muted-foreground">Rang</th>
                     <th className="text-left py-3 px-4 font-medium text-muted-foreground">Artiste</th>
-                    <th className="text-left py-3 px-4 font-medium text-muted-foreground">Streams</th>
+                    <th className="text-left py-3 px-4 font-medium text-muted-foreground">Popularité</th>
                     <th className="text-left py-3 px-4 font-medium text-muted-foreground">Momentum</th>
                     <th className="text-left py-3 px-4 font-medium text-muted-foreground">Placements</th>
                     <th className="text-left py-3 px-4 font-medium text-muted-foreground">Tendance</th>
@@ -438,7 +438,7 @@ const ManagerDashboard = () => {
                             </div>
                           </div>
                         </td>
-                        <td className="py-3 px-4 font-medium">{artist.streams}</td>
+                        <td className="py-3 px-4 font-medium">{artist.popularity}</td>
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-1">
                             <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
