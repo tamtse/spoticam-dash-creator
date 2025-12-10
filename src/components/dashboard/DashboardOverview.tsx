@@ -28,7 +28,7 @@ export const DashboardOverview = () => {
   ];
 
   const alerts = [
-    { type: 'milestone' as const, title: '🚀 Nouveau cap atteint', description: 'Votre track "Summer Vibes" a dépassé 1M streams', time: '2h' },
+    { type: 'milestone' as const, title: '🚀 Nouveau cap atteint', description: 'Votre track "Summer Vibes" a dépassé 100K saves', time: '2h' },
     { type: 'release' as const, title: '🎵 Nouvelle sortie', description: 'Travis Scott vient de sortir un nouveau single', time: '5h' },
     { type: 'playlist' as const, title: '📋 Placement détecté', description: 'Votre track ajoutée à "Chill Hits" (+50K followers)', time: '1j' },
   ];

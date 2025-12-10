@@ -26,9 +26,9 @@ const mockArtist = {
   ],
   score: 87,
   topTracks: [
-    { name: 'SICKO MODE', streams: '2.1B', popularity: 92 },
-    { name: 'goosebumps', streams: '1.8B', popularity: 89 },
-    { name: 'HIGHEST IN THE ROOM', streams: '1.2B', popularity: 85 },
+    { name: 'SICKO MODE', saves: '2.1M', popularity: 92 },
+    { name: 'goosebumps', saves: '1.8M', popularity: 89 },
+    { name: 'HIGHEST IN THE ROOM', saves: '1.2M', popularity: 85 },
   ],
   playlists: [
     { name: 'RapCaviar', followers: '14.2M', position: 3 },
@@ -103,7 +103,7 @@ const EntityDetail = () => {
                         </span>
                         <div className="flex-1">
                           <p className="font-medium">{track.name}</p>
-                          <p className="text-sm text-muted-foreground">{track.streams} streams</p>
+                          <p className="text-sm text-muted-foreground">{track.saves} saves</p>
                         </div>
                         <Badge variant="secondary">Pop: {track.popularity}</Badge>
                       </div>

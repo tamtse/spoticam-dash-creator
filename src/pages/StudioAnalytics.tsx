@@ -41,20 +41,20 @@ import {
 
 // Mock data for analytics
 const performanceData = [
-  { month: "Jan", streams: 12500, followers: 450, saves: 890 },
-  { month: "Fév", streams: 15800, followers: 520, saves: 1020 },
-  { month: "Mar", streams: 18200, followers: 680, saves: 1340 },
-  { month: "Avr", streams: 22100, followers: 890, saves: 1680 },
-  { month: "Mai", streams: 28500, followers: 1120, saves: 2100 },
-  { month: "Juin", streams: 32400, followers: 1380, saves: 2450 },
+  { month: "Jan", popularity: 65, followers: 450, saves: 890 },
+  { month: "Fév", popularity: 68, followers: 520, saves: 1020 },
+  { month: "Mar", popularity: 72, followers: 680, saves: 1340 },
+  { month: "Avr", popularity: 75, followers: 890, saves: 1680 },
+  { month: "Mai", popularity: 78, followers: 1120, saves: 2100 },
+  { month: "Juin", popularity: 82, followers: 1380, saves: 2450 },
 ];
 
 const topPlaylists = [
-  { name: "Afrobeats Vibes 2024", streams: 45200, growth: "+18%", followers: 2340 },
-  { name: "Chill Makossa", streams: 32100, growth: "+12%", followers: 1890 },
-  { name: "Urban Cameroun", streams: 28900, growth: "+25%", followers: 1560 },
-  { name: "Bikutsi Classics", streams: 21500, growth: "+8%", followers: 1120 },
-  { name: "New Wave Africa", streams: 18700, growth: "+32%", followers: 980 },
+  { name: "Afrobeats Vibes 2024", popularity: 85, growth: "+18%", followers: 2340 },
+  { name: "Chill Makossa", popularity: 78, growth: "+12%", followers: 1890 },
+  { name: "Urban Cameroun", popularity: 74, growth: "+25%", followers: 1560 },
+  { name: "Bikutsi Classics", popularity: 68, growth: "+8%", followers: 1120 },
+  { name: "New Wave Africa", popularity: 62, growth: "+32%", followers: 980 },
 ];
 
 const genreDistribution = [
@@ -74,8 +74,8 @@ const audienceData = [
 ];
 
 const chartConfig = {
-  streams: {
-    label: "Streams",
+  popularity: {
+    label: "Popularité",
     color: "hsl(var(--primary))",
   },
   followers: {
@@ -131,10 +131,10 @@ const StudioAnalytics = () => {
         {/* KPI Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
-            icon={Play}
-            label="Total Streams"
-            value="129.5K"
-            trend="+24.5%"
+            icon={TrendingUp}
+            label="Popularité Moyenne"
+            value="82"
+            trend="+8.5%"
             trendUp={true}
           />
           <StatCard
@@ -174,7 +174,7 @@ const StudioAnalytics = () => {
               <ChartContainer config={chartConfig} className="h-[300px] w-full">
                 <AreaChart data={performanceData}>
                   <defs>
-                    <linearGradient id="colorStreams" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient id="colorPopularity" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
                       <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
                     </linearGradient>
@@ -184,10 +184,10 @@ const StudioAnalytics = () => {
                   <ChartTooltip content={<ChartTooltipContent />} />
                   <Area 
                     type="monotone" 
-                    dataKey="streams" 
+                    dataKey="popularity" 
                     stroke="hsl(var(--primary))" 
                     fillOpacity={1} 
-                    fill="url(#colorStreams)" 
+                    fill="url(#colorPopularity)" 
                   />
                 </AreaChart>
               </ChartContainer>
@@ -265,7 +265,7 @@ const StudioAnalytics = () => {
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium">{playlist.streams.toLocaleString()}</p>
+                    <p className="font-medium">Pop: {playlist.popularity}</p>
                     <p className="text-sm text-green-600">{playlist.growth}</p>
                   </div>
                 </div>
